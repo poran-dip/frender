@@ -33,6 +33,14 @@
   "engines": {
     "node": ">=22"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/poran-dip/frender.git"
+  },
+  "bugs": {
+    "url": "https://github.com/poran-dip/frender/issues"
+  },
+  "homepage": "https://github.com/poran-dip/frender#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.4.12"
   }
