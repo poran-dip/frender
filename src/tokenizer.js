@@ -1,5 +1,5 @@
 /**
- * frender/src/tokenizer.js
+ * frenderer/src/tokenizer.js
  *
  * Phase 1: HTML Tokenizer
  *

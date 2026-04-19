@@ -1,5 +1,5 @@
 /**
- * frender/src/parser.js
+ * frenderer/src/parser.js
  *
  * Phase 2: HTML Parser
  *

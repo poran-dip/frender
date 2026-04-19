@@ -1,5 +1,5 @@
 /**
- * frender/src/index.js
+ * frenderer/src/index.js
  * Public API. Spawns an isolated worker thread per render.
  * The main thread never touches page JS — only receives a plain string back.
  */
@@ -12,7 +12,7 @@ const path = require("node:path");
 const WORKER_PATH = path.join(__dirname, "worker.js");
 
 /**
- * @typedef {Object} FrenderOptions
+ * @typedef {Object} frendererOptions
  * @property {number}  [timeout=30000]   - Max ms to wait for render to complete
  * @property {number}  [settle=1000]     - Ms to wait after scripts execute for async rendering
  * @property {boolean} [js=true]         - Whether to execute scripts at all
@@ -24,10 +24,10 @@ const WORKER_PATH = path.join(__dirname, "worker.js");
  * Each call runs in an isolated worker thread — safe to call with untrusted URLs.
  *
  * @param {string} url
- * @param {FrenderOptions} options
+ * @param {frendererOptions} options
  * @returns {Promise<string>} rendered HTML
  */
-function frender(url, options = {}) {
+function frenderer(url, options = {}) {
   const opts = {
     timeout: 30000,
     settle: 1000,
@@ -45,7 +45,7 @@ function frender(url, options = {}) {
 
     const timer = setTimeout(() => {
       worker.terminate();
-      reject(new Error(`frender timed out after ${opts.timeout}ms for: ${url}`));
+      reject(new Error(`frenderer timed out after ${opts.timeout}ms for: ${url}`));
     }, opts.timeout);
 
     worker.on("message", (msg) => {
@@ -73,4 +73,4 @@ function frender(url, options = {}) {
   });
 }
 
-module.exports = { frender };
+module.exports = { frenderer };

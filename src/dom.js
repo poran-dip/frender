@@ -1,5 +1,5 @@
 /**
- * frender/src/dom.js
+ * frenderer/src/dom.js
  *
  * Phase 3: DOM API Layer
  *

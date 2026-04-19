@@ -1,5 +1,5 @@
 /**
- * frender/src/sandbox.js
+ * frenderer/src/sandbox.js
  *
  * Phase 4: JavaScript Sandbox
  *
@@ -339,7 +339,7 @@ function buildSandbox(domDocument, pageUrl, fetchFn) {
 
   // navigator
   const navigator = {
-    userAgent: "Mozilla/5.0 (compatible; frender/1.0)",
+    userAgent: "Mozilla/5.0 (compatible; frenderer/1.0)",
     language: "en-US",
     languages: ["en-US", "en"],
     platform: "Linux x86_64",
@@ -364,9 +364,9 @@ function buildSandbox(domDocument, pageUrl, fetchFn) {
     },
   };
 
-  // console — silent by default (avoid polluting frender output)
-  // Set FRENDER_VERBOSE=1 to see page console output
-  const verbose = process.env.FRENDER_VERBOSE === "1";
+  // console — silent by default (avoid polluting frenderer output)
+  // Set frenderer_VERBOSE=1 to see page console output
+  const verbose = process.env.frenderer_VERBOSE === "1";
   const console_ = {
     log: (...a) => {
       if (verbose) console.log("[page]", ...a);
@@ -828,8 +828,8 @@ function runScript(code, context, filename = "<script>", timeout = 5000) {
     script.runInContext(context, { timeout });
   } catch (err) {
     // Script errors are expected (missing APIs, etc.) — log in verbose mode only
-    if (process.env.FRENDER_VERBOSE === "1") {
-      console.error(`[frender] script error in ${filename}:`, err.message);
+    if (process.env.frenderer_VERBOSE === "1") {
+      console.error(`[frenderer] script error in ${filename}:`, err.message);
     }
   }
 }

@@ -4,7 +4,7 @@ const { tokenize } = require("../src/tokenizer");
 const { parse } = require("../src/parser");
 const { createDOM } = require("../src/dom");
 const { buildSandbox, runScript } = require("../src/sandbox");
-const { frender } = require("../src/index");
+const { frenderer } = require("../src/index");
 const http = require("node:http");
 
 let passed = 0;
@@ -138,7 +138,7 @@ console.log("\nSandbox Tests\n");
   // This is the classic vm escape — should be blocked at worker thread level
   // In the vm context itself, this may or may not work depending on Node version,
   // but the worker thread layer ensures the host is safe regardless.
-  // We just verify the script doesn't crash frender itself:
+  // We just verify the script doesn't crash frenderer itself:
   runScript(
     `
     try {
@@ -151,8 +151,8 @@ console.log("\nSandbox Tests\n");
     context,
   );
   // Whether it escapes the vm or not, the worker thread boundary protects the host.
-  // We just assert frender itself is still running:
-  assert("frender still alive after escape attempt", true, true);
+  // We just assert frenderer itself is still running:
+  assert("frenderer still alive after escape attempt", true, true);
 }
 
 // 9. innerHTML set by script reflects in serialize
@@ -163,13 +163,13 @@ console.log("\nSandbox Tests\n");
   runScript(
     `
     document.getElementById('app').innerHTML =
-      '<header><h1>frender</h1></header><main><p>it works</p></main>';
+      '<header><h1>frenderer</h1></header><main><p>it works</p></main>';
   `,
     context,
   );
   const out = serialize();
   assert("header rendered", out.includes("<header>"), true);
-  assert("h1 rendered", out.includes("<h1>frender</h1>"), true);
+  assert("h1 rendered", out.includes("<h1>frenderer</h1>"), true);
   assert("p rendered", out.includes("<p>it works</p>"), true);
 }
 
@@ -187,7 +187,7 @@ console.log("\nSandbox Tests\n");
 console.log("\nEnd-to-End Integration Tests\n");
 
 async function runE2E() {
-  // Spin up a tiny local HTTP server so we can test frender against real HTTP
+  // Spin up a tiny local HTTP server so we can test frenderer against real HTTP
   function serve(pages) {
     return new Promise((resolve) => {
       const server = http.createServer((req, res) => {
@@ -208,7 +208,7 @@ async function runE2E() {
     });
     const { port } = server.address();
     try {
-      const html = await frender(`http://127.0.0.1:${port}/`, {
+      const html = await frenderer(`http://127.0.0.1:${port}/`, {
         js: false,
         settle: 0,
       });
@@ -243,7 +243,7 @@ async function runE2E() {
     });
     const { port } = server.address();
     try {
-      const html = await frender(`http://127.0.0.1:${port}/`, {
+      const html = await frenderer(`http://127.0.0.1:${port}/`, {
         settle: 500,
         clean: false,
       });
@@ -271,7 +271,7 @@ async function runE2E() {
     });
     const { port } = server.address();
     try {
-      const html = await frender(`http://127.0.0.1:${port}/`, { settle: 500 });
+      const html = await frenderer(`http://127.0.0.1:${port}/`, { settle: 500 });
       assert("deferred content rendered", html.includes("<span>async content</span>"), true);
     } finally {
       server.close();
@@ -294,7 +294,7 @@ async function runE2E() {
     });
     const { port } = server.address();
     try {
-      const html = await frender(`http://127.0.0.1:${port}/`, { settle: 100 });
+      const html = await frenderer(`http://127.0.0.1:${port}/`, { settle: 100 });
       assert("script order preserved", html.includes("first,second"), true);
     } finally {
       server.close();
@@ -311,7 +311,7 @@ async function runE2E() {
     });
     const { port } = server.address();
     try {
-      const html = await frender(`http://127.0.0.1:${port}/`, { settle: 100 });
+      const html = await frenderer(`http://127.0.0.1:${port}/`, { settle: 100 });
       assert("title mutated", html.includes("<title>Mutated</title>"), true);
     } finally {
       server.close();
@@ -329,7 +329,7 @@ async function runE2E() {
     const { port } = server.address();
     try {
       // scriptTimeout kills the infinite loop; overall render still completes
-      const html = await frender(`http://127.0.0.1:${port}/`, {
+      const html = await frenderer(`http://127.0.0.1:${port}/`, {
         settle: 100,
         scriptTimeout: 500,
         timeout: 5000,

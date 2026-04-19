@@ -151,9 +151,9 @@ console.log("\nDOM API Tests\n");
     '<!DOCTYPE html><html><head><title>Test</title></head><body><div id="root"></div></body></html>',
   );
   const root = document.getElementById("root");
-  root.innerHTML = "<h1>Hello frender</h1>";
+  root.innerHTML = "<h1>Hello frenderer</h1>";
   const out = serialize();
-  assert("h1 in output", out.includes("<h1>Hello frender</h1>"), true);
+  assert("h1 in output", out.includes("<h1>Hello frenderer</h1>"), true);
   assert("structure intact", out.includes("<title>Test</title>"), true);
 }
 
@@ -207,7 +207,7 @@ console.log("\nDOM API Tests\n");
   h1.textContent = "Hello World";
   const p = document.createElement("p");
   p.setAttribute("data-rendered", "true");
-  p.textContent = "Rendered by frender";
+  p.textContent = "Rendered by frenderer";
   app.appendChild(h1);
   app.appendChild(p);
   root.appendChild(app);

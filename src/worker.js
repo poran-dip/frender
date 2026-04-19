@@ -1,5 +1,5 @@
 /**
- * frender/src/worker.js
+ * frenderer/src/worker.js
  * Orchestrates all phases inside the isolated worker thread.
  */
 
@@ -14,9 +14,9 @@ const { createDOM } = require("./dom");
 const { buildSandbox, runScript } = require("./sandbox");
 const { clean, parseCleanOpts } = require("./cleaner");
 
-const verbose = process.env.FRENDER_VERBOSE === "1";
+const verbose = process.env.frenderer_VERBOSE === "1";
 const log = (...a) => {
-  if (verbose) process.stderr.write(`[frender] ${a.join(" ")}\n`);
+  if (verbose) process.stderr.write(`[frenderer] ${a.join(" ")}\n`);
 };
 
 function resolveUrl(src, base) {
@@ -34,7 +34,7 @@ async function fetchText(url, headers = {}, timeoutMs = 10000) {
     const res = await fetch(url, {
       signal: controller.signal,
       headers: {
-        "User-Agent": "Mozilla/5.0 (compatible; frender/1.0)",
+        "User-Agent": "Mozilla/5.0 (compatible; frenderer/1.0)",
         Accept: "*/*",
         ...headers,
       },

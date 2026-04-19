@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * frender/tests/e2e.test.js
+ * frenderer/tests/e2e.test.js
  *
  * Real-world E2E tests against public URLs.
  * These tests hit the actual internet — run separately from unit tests.
@@ -13,7 +13,7 @@
  * Skips individual tests gracefully if a site is unreachable.
  */
 
-const { frender } = require("../src/index");
+const { frenderer } = require("../src/index");
 
 const verbose = process.argv.includes("--verbose");
 let passed = 0;
@@ -61,7 +61,7 @@ async function test(name, url, fn, opts = {}) {
   process.stdout.write(`\n  ${name} (${url})\n`);
   const timeout = opts.timeout || 30000;
   try {
-    const html = await frender(url, {
+    const html = await frenderer(url, {
       timeout,
       settle: opts.settle ?? 1000,
       js: opts.js ?? true,
@@ -92,7 +92,7 @@ async function test(name, url, fn, opts = {}) {
 }
 
 async function run() {
-  console.log("\nfrender E2E Tests — Real URLs\n");
+  console.log("\nfrenderer E2E Tests — Real URLs\n");
   console.log("  Note: these tests hit the live internet.");
   console.log("  Individual tests are skipped if a site is unreachable.\n");
   console.log("─".repeat(60));
@@ -193,7 +193,7 @@ async function run() {
     "httpbin — custom user agent",
     "https://httpbin.org/user-agent",
     (html) => {
-      assertContains("frender UA present", html, "frender");
+      assertContains("frenderer UA present", html, "frenderer");
     },
     { js: false, timeout: 15000 },
   );
@@ -251,7 +251,7 @@ async function run() {
 
   // 404
   try {
-    await frender("https://example.com/this-definitely-does-not-exist-404", {
+    await frenderer("https://example.com/this-definitely-does-not-exist-404", {
       js: false,
       timeout: 10000,
     });
@@ -272,7 +272,7 @@ async function run() {
 
   // Invalid URL
   try {
-    await frender("not-a-url", { js: false, timeout: 5000 });
+    await frenderer("not-a-url", { js: false, timeout: 5000 });
     console.log("    ✗ should have thrown on invalid URL");
     failed++;
   } catch (err) {
@@ -287,7 +287,7 @@ async function run() {
 
   // Timeout
   try {
-    await frender("https://example.com", { js: false, timeout: 1 });
+    await frenderer("https://example.com", { js: false, timeout: 1 });
     console.log("    ✗ should have timed out");
     failed++;
   } catch (err) {

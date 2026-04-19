@@ -1,29 +1,29 @@
-# frender
+# frenderer
 
 Execute client-side JavaScript and extract fully rendered HTML or text — without a browser.
 
 Perfect for scraping, SEO, and AI pipelines — use `--text` to extract clean, readable content from modern SPAs.
 
 ```bash
-frender https://example.com
+frenderer https://example.com
 ```
 
 ## How it works
 
-Most modern sites are JS-rendered — the raw HTML is just an empty `<div id="root">`. frender runs the page’s JavaScript in a sandboxed environment, lets the DOM fully resolve, then returns the final result.
+Most modern sites are JS-rendered — the raw HTML is just an empty `<div id="root">`. frenderer runs the page’s JavaScript in a sandboxed environment, lets the DOM fully resolve, then returns the final result.
 
 Pipeline:
 
 **Tokenizer → Parser → DOM → JS Sandbox → Cleaner**
 
-frender exists for one simple reason: most tools either don’t execute JavaScript, or require a full browser to do it. This sits in the middle — fast, lightweight, and purpose-built for content extraction.
+frenderer exists for one simple reason: most tools either don’t execute JavaScript, or require a full browser to do it. This sits in the middle — fast, lightweight, and purpose-built for content extraction.
 
 All built from scratch in Node.js. No Puppeteer. No Playwright. No headless browser.
 
 ## Install
 
 ```bash
-npm install -g frender
+npm install -g frenderer
 ```
 
 Requires Node.js 22+.
@@ -31,7 +31,7 @@ Requires Node.js 22+.
 ## CLI
 
 ```bash
-frender <url> [options]
+frenderer <url> [options]
 ```
 
 | Flag                    | Default | Description                                                |
@@ -53,36 +53,36 @@ frender <url> [options]
 
 ```bash
 # Render a JS-heavy SPA
-frender https://myapp.vercel.app
+frenderer https://myapp.vercel.app
 
 # Save to file
-frender https://myapp.vercel.app -o out.html
+frenderer https://myapp.vercel.app -o out.html
 
 # Extract plain text (great for LLM input or search indexing)
-frender https://myapp.vercel.app --text -o content.txt
+frenderer https://myapp.vercel.app --text -o content.txt
 
 # Give async frameworks more time to render
-frender https://myapp.vercel.app -s 3000
+frenderer https://myapp.vercel.app -s 3000
 
 # Static fetch only, no JS
-frender https://example.com --no-js
+frenderer https://example.com --no-js
 
 # Keep raw HTML with all attributes intact
-frender https://myapp.vercel.app --no-clean --attributes
+frenderer https://myapp.vercel.app --no-clean --attributes
 
 # Pass cookies for auth-protected pages
-frender https://myapp.vercel.app -H "Cookie: session=abc123"
+frenderer https://myapp.vercel.app -H "Cookie: session=abc123"
 
 # Debug script errors
-frender https://myapp.vercel.app --verbose
+frenderer https://myapp.vercel.app --verbose
 ```
 
 ## Library
 
 ```js
-import { frender } from "frender";
+import { frenderer } from "frenderer";
 
-const html = await frender("https://myapp.vercel.app", {
+const html = await frenderer("https://myapp.vercel.app", {
   settle: 2000, // ms to wait for async rendering
   timeout: 30000, // total timeout
   js: true, // execute scripts
@@ -93,10 +93,10 @@ const html = await frender("https://myapp.vercel.app", {
 
 ### Clean options
 
-By default frender strips classes, aria labels, data attributes, scripts, styles, SVGs, comments, and Next.js image optimizer URLs — leaving lean, readable HTML.
+By default frenderer strips classes, aria labels, data attributes, scripts, styles, SVGs, comments, and Next.js image optimizer URLs — leaving lean, readable HTML.
 
 ```js
-const html = await frender(url, {
+const html = await frenderer(url, {
   clean: {
     class: true, // Tailwind / CSS classnames
     aria: true, // aria-* attributes
@@ -123,14 +123,14 @@ const html = await frender(url, {
 Drop-in SEO for existing Vite/CRA apps — serve rendered HTML to crawlers, normal SPA to users:
 
 ```js
-import { frender } from "frender";
+import { frenderer } from "frenderer";
 
 const BOT_UA = /googlebot|bingbot|twitterbot|facebookexternalhit|crawler/i;
 
 app.use(async (req, res, next) => {
   if (!BOT_UA.test(req.headers["user-agent"] || "")) return next();
 
-  const html = await frender(`http://localhost:${PORT}${req.url}`, {
+  const html = await frenderer(`http://localhost:${PORT}${req.url}`, {
     settle: 1000,
   });
   res.send(html);
@@ -155,7 +155,7 @@ Designed to safely execute untrusted page scripts using multiple isolation layer
 
 ## Contributing
 
-frender is early and intentionally simple. If something feels missing or could be cleaner, you're probably right.
+frenderer is early and intentionally simple. If something feels missing or could be cleaner, you're probably right.
 
 Areas that could use help:
 

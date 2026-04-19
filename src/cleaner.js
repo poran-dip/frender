@@ -1,5 +1,5 @@
 /**
- * frender/src/cleaner.js
+ * frenderer/src/cleaner.js
  *
  * Post-render HTML cleaner.
  * Strips noise from the serialized output — Tailwind classnames, aria labels,
@@ -220,7 +220,7 @@ function parseCleanOpts(val) {
   const opts = Object.fromEntries(Object.keys(CLEAN_DEFAULTS).map((k) => [k, false]));
   for (const key of keys) {
     if (key in opts) opts[key] = true;
-    else process.stderr.write(`[frender] unknown clean option: ${key}\n`);
+    else process.stderr.write(`[frenderer] unknown clean option: ${key}\n`);
   }
   return opts;
 }

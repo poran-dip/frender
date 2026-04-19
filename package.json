@@ -1,10 +1,10 @@
 {
-  "name": "frender",
+  "name": "frenderer",
   "version": "0.0.1",
   "description": "A lightweight, browserless SPA renderer. Execute client-side JavaScript and return fully rendered HTML without Chromium.",
   "main": "src/index.js",
   "bin": {
-    "frender": "src/cli.js"
+    "frenderer": "src/cli.js"
   },
   "type": "commonjs",
   "exports": {
@@ -35,12 +35,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/poran-dip/frender.git"
+    "url": "https://github.com/poran-dip/frenderer.git"
   },
   "bugs": {
-    "url": "https://github.com/poran-dip/frender/issues"
+    "url": "https://github.com/poran-dip/frenderer/issues"
   },
-  "homepage": "https://github.com/poran-dip/frender#readme",
+  "homepage": "https://github.com/poran-dip/frenderer#readme",
   "devDependencies": {
     "@biomejs/biome": "^2.4.12"
   }

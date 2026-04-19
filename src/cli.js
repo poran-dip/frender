@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * frender/src/cli.js
+ * frenderer/src/cli.js
  *
  * Phase 7: CLI
  *
  * Usage:
- *   frender <url> [options]
+ *   frenderer <url> [options]
  *
  * Options:
  *   -o, --out <file>        Write output to file instead of stdout
@@ -15,7 +15,7 @@
  *       --script-timeout    Per-script execution timeout   (default: 5000)
  *   -H, --header <k:v>      Add a request header (repeatable)
  *   -v, --verbose           Show page console output + script errors
- *   -q, --quiet             Suppress all frender output except HTML
+ *   -q, --quiet             Suppress all frenderer output except HTML
  *       --version           Print version and exit
  *   -h, --help              Print this help and exit
  */
@@ -24,7 +24,7 @@
 
 const fs = require("node:fs");
 const path = require("node:path");
-const { frender } = require("./index");
+const { frenderer } = require("./index");
 const { CLEAN_DEFAULTS, prettify } = require("./cleaner");
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -35,15 +35,15 @@ function print(...args) {
   process.stderr.write(`${args.join("·")}\n`);
 }
 function die(msg, code = 1) {
-  print(`\nfrender: ${msg}\n`);
+  print(`\nfrenderer: ${msg}\n`);
   process.exit(code);
 }
 
 const HELP = `
-frender v${PKG.version} — fetch and render JS-heavy pages without a browser
+frenderer v${PKG.version} — fetch and render JS-heavy pages without a browser
 
 Usage:
-  frender <url> [options]
+  frenderer <url> [options]
 
 Options:
   -o, --out <file>          Write HTML to file (default: stdout)
@@ -58,11 +58,11 @@ Options:
   -h, --help                Print this help
 
 Examples:
-  frender https://example.com
-  frender https://example.com -o out.html
-  frender https://example.com --no-js -q
-  frender https://example.com -s 2000 -H "Cookie: session=abc"
-  frender https://example.com --verbose 2>errors.log
+  frenderer https://example.com
+  frenderer https://example.com -o out.html
+  frenderer https://example.com --no-js -q
+  frenderer https://example.com -s 2000 -H "Cookie: session=abc"
+  frenderer https://example.com --verbose 2>errors.log
 `.trim();
 
 // ─── Arg parser ───────────────────────────────────────────────────────────────
@@ -93,7 +93,7 @@ function parseArgs(argv) {
         process.exit(0);
         break;
       case "--version":
-        print(`frender v${PKG.version}`);
+        print(`frenderer v${PKG.version}`);
         process.exit(0);
         break;
       case "-v":
@@ -148,7 +148,7 @@ function parseArgs(argv) {
         break;
       }
       default:
-        if (a.startsWith("-")) die(`Unknown option: ${a}\nRun frender --help for usage.`);
+        if (a.startsWith("-")) die(`Unknown option: ${a}\nRun frenderer --help for usage.`);
         if (opts.url) die("Too many arguments — only one URL accepted.");
         opts.url = a;
     }
@@ -182,10 +182,10 @@ async function main() {
   }
 
   // Propagate verbose flag to worker via env
-  if (opts.verbose) process.env.FRENDER_VERBOSE = "1";
+  if (opts.verbose) process.env.frenderer_VERBOSE = "1";
 
   const startMs = Date.now();
-  progress(opts.quiet, `\nfrender v${PKG.version}`);
+  progress(opts.quiet, `\nfrenderer v${PKG.version}`);
   progress(opts.quiet, `  url      : ${opts.url}`);
   progress(opts.quiet, `  js       : ${opts.js}`);
   progress(opts.quiet, `  settle   : ${opts.settle}ms`);
@@ -198,7 +198,7 @@ async function main() {
   try {
     progress(opts.quiet, "  fetching + rendering...");
 
-    const html = await frender(opts.url, {
+    const html = await frenderer(opts.url, {
       timeout: opts.timeout,
       settle: opts.settle,
       js: opts.js,
