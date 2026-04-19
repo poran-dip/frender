@@ -1,0 +1,36 @@
+{
+  "name": "frender",
+  "version": "0.0.1-alpha",
+  "description": "A lightweight, browserless SPA renderer. Execute client-side JavaScript and return fully rendered HTML without Chromium.",
+  "main": "src/index.js",
+  "bin": {
+    "frender": "src/cli.js"
+  },
+  "type": "commonjs",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "test": "node --test",
+    "test:e2e": "node tests/e2e.test.js",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "keywords": [
+    "ssr",
+    "prerender",
+    "spa",
+    "headless-browser",
+    "seo",
+    "crawler",
+    "rendering"
+  ],
+  "author": "Poran Dip",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.12"
+  }
+}

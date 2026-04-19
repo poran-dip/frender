@@ -1,0 +1,13 @@
+# npm
+node_modules/
+*.log
+npm-debug.log*
+
+# os junk
+.DS_Store
+Thumbs.db
+
+# ide junk
+.vscode/
+!.vscode/extensions.json
+.idea/
