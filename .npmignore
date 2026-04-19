@@ -1,0 +1,13 @@
+# dev & ci
+tests/
+.github/
+
+# ide junk
+.vscode/
+.idea/
+
+# os junk
+Thumbs.db
+
+# publish artifacts
+*.tgz

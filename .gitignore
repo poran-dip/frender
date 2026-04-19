@@ -11,3 +11,6 @@ Thumbs.db
 .vscode/
 !.vscode/extensions.json
 .idea/
+
+# publish artifacts
+*.tgz
