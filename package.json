@@ -1,6 +1,6 @@
 {
   "name": "frender",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1",
   "description": "A lightweight, browserless SPA renderer. Execute client-side JavaScript and return fully rendered HTML without Chromium.",
   "main": "src/index.js",
   "bin": {
